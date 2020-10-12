@@ -5,9 +5,9 @@
             url: 'login/validate',
             type: 'POST',
             data: $(this).serialize(),
-            success: function(data){
-                var json = JSON.parse(data);
-                console.log(json)
+            success: function(err){
+                var json = JSON.parse(err);
+                window.location.replace(json.url)
             },
             statusCode: {
                 400: function(xhr){

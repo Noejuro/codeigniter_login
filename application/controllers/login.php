@@ -6,7 +6,7 @@ class Login extends CI_Controller {
         parent::__construct();
         $this->load->helper('url');
         $this->load->database();
-        $this->load->library('form_validation');
+        $this->load->library(array('form_validation', 'session'));
         $this->load->helper(array('auth/login_rules'));
         $this->load->model('Auth');
     }
@@ -31,8 +31,15 @@ class Login extends CI_Controller {
             $email = $this->input->post('email');
             $password = $this->input->post('password');
             if($res = $this->Auth->login($email, $password)) {
-                echo json_encode(array('message' => 'Bienvenido' ));
+                $data = array(
+                    'id' => $res->idTest ,
+                    'name' => $res->name ,
+                    'email' => $res->email,
+                    'is_logged' => true
+                );
                 
+                $this->session->set_userdata($data);
+                echo json_encode( array('url' => base_url('users')) );
             } else {
                 echo json_encode(array('message' => 'User does not exist' ));
                 $this->output->set_status_header(401);
@@ -41,5 +48,12 @@ class Login extends CI_Controller {
             
         }
 
+    }
+
+    public function logout() {
+        $vras = array('id', 'name', 'email', 'is_logged');
+        $this->session->unset_userdata($vars);
+        $this->session->sess_destroy();
+        redirect('login');
     }
 }

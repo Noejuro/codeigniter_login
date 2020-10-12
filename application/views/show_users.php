@@ -14,6 +14,9 @@
         <div class="header">
             Users
         </div>
+        <div class="justify-content-end">
+            <a href="<?=base_url('login/logout') ?>">Log out</a>
+        </div>
         <div class="row align-items-center" style="height: 50%">
             <div class="container">
                 <div class="row py-3" style="background-color: #ba68c8; color: white; font-size: 18px">
